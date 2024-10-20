@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ol>
+        <li><span class="name">Minkowski</span> likes to go to gym.</li>
+        <li><span class="name">Harrison</span> likes to go swimming. </li>
+        <li><span class="name">Yvouune</span> likes to drink coffee.</li>
+    </ol>
+    <div><button onclick="change();">ChangeName</button>
+    <script>
+        let i = 0;
+        let change = () => {
+            if (i < 3) {
+            document.getElementsByClassName("name")[i].innerHTML = "Solomon";
+            i++;
+            }
+            else if(i <= 6){ 
+                switch (i-3) {
+                    case 0:
+                        document.getElementsByClassName("name")[i-3].innerHTML = "Minkowski";
+                        break;
+                    case 1:
+                        document.getElementsByClassName("name")[i-3].innerHTML = "Harrison";
+                        break;
+                    case 2:
+                        document.getElementsByClassName("name")[i-3].innerHTML = "Yvouune";
+                        break;
+                }
+                i++;
+                if (i === 6) i=0;
+
+            }
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,36 @@
+<script>
+    const aArray =  [];
+    for(let i = 2; i <= 12; i++) {
+        aArray.push(0);
+    }
+
+    function roll() {
+      const n1 = Math.floor(Math.random()*6 + 1);
+      const n2 = Math.floor(Math.random()*6 + 1);
+      const sum = n1 + n2;
+      document.getElementById("value").innerHTML = `${n1} + ${n2} = ${sum}`;
+      aArray[sum-2] += 1;
+      const table = document.getElementById('atable');
+      let text = `<table border='1'>`;
+      for(let i = 2; i<= 12; i++) {
+        text +=  
+        `<tr>
+            <td>${i}</td>
+            <td>${aArray[i-2]}</td>
+            <td>${'*'.repeat(aArray[i-2])}</td>
+        </tr>
+        `
+      }
+      text += '</table>';
+      table.innerHTML = text;       
+
+      
+    }
+    </script>
+    
+    <body>
+    <button onClick='roll()'>Roll Your Dice</button>
+    <span id='value'></span>
+    <br><br>
+    <span id="atable"></span>
+    </body>

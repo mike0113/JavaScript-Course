@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+    let json = `[
+  { 
+    "name": "Alice",
+    "height": 171,
+    "weight": 61
+  },
+  { 
+    "name": "Bob",
+    "height": 172,
+    "weight": 62
+  },
+  { 
+    "name": "Carol",
+    "height": 173,
+    "weight": 63
+  },
+  { "name": "Daniel",
+    "height": 174,
+    "weight": 64
+  }
+]`;
+
+  let array = JSON.parse(json);
+  let ol = document.createElement("ol");
+  document.body.appendChild(ol);
+  let table = document.createElement("table");
+
+  for(let i = 0; i < array.length; i++) {
+
+    let li = document.createElement("li");
+    li.innerHTML = array[i].name;    
+    li.setAttribute("onclick", `show(${i})`);
+    li.setAttribute("id", i);
+    ol.appendChild(li);
+
+  }
+
+  function show(i) {
+    console.log(i);
+    let obj = array[i];
+    table.innerHTML =`
+      <tr> 
+        <td>${Object.keys(obj)[0]}</td>
+        <td>${obj.name}</td>
+      </tr>
+      <tr>
+        <td> ${Object.keys(obj)[1]} </td>
+        <td> ${obj.height} </td>
+      </tr>
+      <tr>
+        <td> ${Object.keys(obj)[2]} </td>
+        <td> ${obj.weight} </td>
+      </tr>
+    </table>`;
+    document.body.appendChild(table);
+  }
+    
+</script>
+
+<style>
+  li {
+    width:fit-content;
+    margin: 10px;
+
+  }
+</style>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="start" onclick="start();">Start</button>
+    <button id="stop" onclick="stop()" disabled>Stop</button>
+    <br>
+    <div id ="time"></div>
+    <script>
+        let time = new Date();
+        let n;
+        function start() {
+            document.getElementById('start').disabled = true;
+            document.getElementById('stop').disabled = false;
+            n = setInterval(times, 500);
+        }
+
+        function times() {
+            time = new Date();
+            document.getElementById("time").innerHTML = time.toString();
+            // let sec = time.getTime();
+            // time = new Date(sec);
+        }
+
+        function stop() {
+            document.getElementById('start').disabled = false;
+            document.getElementById('stop').disabled = true;
+            clearInterval(n);
+        }
+
+
+
+
+    </script>
+</body>
+</html>

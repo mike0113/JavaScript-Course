@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input  id="input" onkeyup="sends();"/>
+    <br>
+    <textarea id="output" style='height:180px'></textarea>
+    
+    <script>
+        const socket = new WebSocket("ws://lilina.csie.ncnu.edu.tw:10003");
+
+        //Listen for messages
+        socket.onmessage = (event) => {  
+             s1 = JSON.parse(event.data);
+             //console.log(s1);
+             
+             let text = '';
+             for(let i = 0; i < s1.length; i++){
+                text += s1[i] + '\n';
+             }
+             document.getElementById("output").innerHTML = text;
+            
+            };
+
+        function sends() {
+            let text = document.getElementById("input").value;
+            //console.log(text);
+            if (text.length >= 2)
+                socket.send(text);
+        }
+        let latex = document.createElement("p");
+        latex.innerHTML = `/( x_(1) = x^(2)  /)`;
+        document.body.appendChild(latex);
+
+    </script>
+</body>
+</html>

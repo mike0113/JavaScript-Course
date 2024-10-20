@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="text"/>
+    <br>
+    <button type="button" onclick="sends();">Send</button>
+
+    <script>
+        const socket = new WebSocket("ws://lilina.csie.ncnu.edu.tw:10002");
+        socket.onmessage = (event) => {  console.log("Message from server ", event.data);};
+        
+        function sends() {
+            let text = document.getElementById("text").value;
+            socket.send(text);
+        }
+        
+        
+
+    </script>
+    
+</body>
+</html>

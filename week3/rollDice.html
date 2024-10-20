@@ -1,0 +1,16 @@
+<script>
+function roll() {
+  const n = Math.floor(Math.random()*6 + 1);
+  document.getElementById("value").innerHTML = n;
+  const image = document.getElementById('pic');
+  image.setAttribute('src',`https://ipv6.ncnu.org/Images/dice-${n}.png`);
+  
+}
+</script>
+
+<body>
+<button onClick='roll()'>Roll Your Dice</button>
+<span id='value'></span>
+<br>
+<img id ='pic' width="50px"/>
+</body>

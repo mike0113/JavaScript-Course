@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCD</title>
+</head>
+<body>
+    <h2> Enter two numbers to calculate their GCD</h2>
+    <div>
+        <input id="a" />
+        <input id="b" />
+        <button type="button" onclick="cal();">Calculate</button>
+    </div>
+    <br>
+    <span> Ans:</span>
+    <span id="answer"></span>
+    <script>
+    function cal(){
+        let a, b;
+        a = Number(document.getElementById('a').value);
+        b = Number(document.getElementById('b').value);
+        let ans = document.getElementById('answer');
+        ans.innerHTML = gcd(a,b);
+    }
+    
+    let gcd = function(a,b) {
+        if (b === 0) {
+            return a;
+        }else{
+            return gcd(b, a%b);
+        }
+    } 
+    
+    </script>
+</body>
+</html>

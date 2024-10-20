@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="start" onclick="start();"> Start </button>
+    <button id="stop" onclick="stop();"> Stop </button>
+    <br>
+    <pre id="show" ></pre>
+
+    <script>
+        let TICK = 200;
+        let usedx = 5;
+        let counter = 0;
+        //let obj;
+        let arrWords =['egg', 'ox', 'dog', 'bird', 'mouse'];
+        let arrObj = [];
+        let nInter;
+        class Word{
+            constructor(str, x, y) {
+                this.str = str;
+                this.x = x;
+                this.y = y;
+                this.momentum = str.length;
+            }
+
+            inc() {
+                this.y += 1;
+            }
+        }
+
+        function start() {
+            arrObj = [];
+            counter = 0;
+            usedx = 5;
+            document.getElementById("start").setAttribute('disabled', true);
+            document.getElementById("stop").removeAttribute('disabled');
+            //Shuffle an array
+            arrWords.sort(() => 0.4 - Math.random());
+            arrWords.sort(() => 0.6 - Math.random());
+            for(let i = 0; i < arrWords.length; i++) {
+                arrObj.push(new Word(arrWords[i], usedx, 0));
+                usedx += arrWords[i].length + 3;
+            }
+            
+            nInter = setInterval(moveWords , TICK);
+        }
+
+        function moveWords() {
+            counter += 1;
+            let over24;
+            let text = '-'.repeat(82) + '<br>';
+            arrObj.forEach((item) => {
+                if(counter % item.momentum === 0) {
+                    item.inc();
+                }
+            })
+
+            for(let i = 0; i < 24; i++) {
+                over24 = 0;
+                text += '|' + ' '.repeat(5);
+                arrObj.forEach((item) => {
+                    if (item.y >= 24) over24 += 1;
+                    if (item.y === i) 
+                        text += item.str + ' '.repeat(3);
+                    else {
+                        text += ' '.repeat(item.momentum + 3);
+                        console.log(item.length);
+                    }
+                });
+                if (over24 >= arrObj.length) stop();
+                text += ' '.repeat(80 - usedx) + '|<br>';
+            }
+            text += '-'.repeat(82);
+            
+            document.getElementById('show').innerHTML = text;
+        }
+
+        function stop() {
+            clearInterval(nInter);
+            document.getElementById("start").removeAttribute('disabled');
+            document.getElementById("stop").setAttribute('disabled', true);
+        }
+
+    </script>    
+</body>
+</html>

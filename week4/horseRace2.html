@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id = 'start' onclick="start();">Start</button>
+    <button id = 'stop' onclick="stop();" disabled="1">Stop</button>
+
+    <pre id = 'show'></pre>
+
+    <script>
+        class Horse {
+            constructor(){
+                this.position = 0;
+            }
+            forward() {
+                this.position += 1;
+            }
+        }
+
+        let horse = `~/-\\^`;
+        let dist = [];
+        for(let i = 0; i < 8; i++){
+            dist.push(new Horse());
+        }
+        // dist = Array.from('0'.repeat(8)).map(x => Number(x));
+        console.log(dist);
+        let interId;
+        let initial = true;
+        function start() {
+            document.getElementById('start').disabled = true;
+            document.getElementById('stop').disabled = false;
+            if (initial) {
+                initial = false;
+                let text = '-'.repeat(72);
+                for(let i = 0; i < 8; i++) {
+                    text += `<div  id='${i}'>${horse}${' '.repeat(66)}|</div>`; 
+                    text += '-'.repeat(72);               
+                }
+                document.getElementById('show').innerHTML = text;
+            }
+            interId = setInterval( run, 50);
+        }
+
+        function run() {
+            let num = Math.floor(Math.random() * 8);
+            dist[num].forward();
+
+            if(dist[num] > 66) {
+                dist[num] = 67;
+                document.getElementById('stop').disabled = true;
+                document.getElementById(num).innerHTML = `${' '.repeat(dist[num].position)}${horse}`;
+                let div = document.createElement('div');
+                div.innerHTML = `Horse ${num + 1} Wins!`;
+                div.style.fontSize = '25px';
+                document.body.appendChild(div);
+
+                clearInterval(interId);
+            }
+
+            document.getElementById(num).innerHTML = `${' '.repeat(dist[num].position)}${horse}${' '.repeat(66-dist[num].position)}|`;
+
+        }
+        function stop() {
+            document.getElementById('start').disabled = false;
+            document.getElementById('stop').disabled = true;
+            clearInterval(interId);
+        }
+
+
+
+    </script>
+</body>
+</html>

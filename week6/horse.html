@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>createElement</h1>
+    <span>Write a JavaScript script so that when the user click the "+" button, one "tr" element will be created and added as a child of the "table" element. When the "-" button is created, the last "tr" element is removed.</span>
+    <table border="1" id="tt"></table>
+    <hr>
+    <button type="button" id="-" onclick="dele();">-</button>
+    <button type="button" id="+" onclick="add();">+</button>
+
+    <script>
+        let horse = `<td> ~/-\\^ </td>`;
+        let table = document.getElementById("tt");
+        let createList = [];
+        function add() {
+            let tr = document.createElement("tr");
+            tr.innerHTML = horse;
+            table.appendChild(tr);
+            createList.push(tr);
+            //console.log(table);
+        }
+
+        function dele() {
+            if(createList.length > 0) {
+                let remove = createList.pop();
+                table.removeChild(remove);
+            }
+
+        }
+
+    </script>
+    
+</body>
+</html>
+
+<style>
+    button{
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+        cursor:pointer;
+        border-radius: 10px;
+        color:aliceblue;
+        background-color:rgb(49, 62, 67);
+    }
+
+</style>
