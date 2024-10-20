@@ -1,2 +1,2 @@
 # JavaScript-Course
-1131-JavaScript Proggramming
+1131-JavaScript Programming
