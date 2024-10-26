@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id = 'start' onclick="start();">Start</button>
+    <button id = 'stop' onclick="stop();" disabled="1">Stop</button>
+
+    <pre id = 'show'></pre>
+
+
+
+    <script>
+        let horse = `Orz`;
+        let track = 8;
+        let dist = [];
+        let screen = 74;
+        let space = 72 - 3;
+        console.log(screen);
+        for(let i = 0; i < track; i++){
+            dist.push(space);
+        }
+        
+        //let dist = Array.from('0'.repeat(8)).map(x => Number(x));
+        
+        console.log(dist);
+        let interId;
+        let initial = true;
+        function start() {
+            document.getElementById('start').disabled = true;
+            document.getElementById('stop').disabled = false;
+            if (initial) {
+                initial = false;
+                let text = '-'.repeat(screen);
+                for(let i = 0; i < track; i++) {
+                    text += `<div  id='${i}'>|${' '.repeat(space)}${horse}|</div>`; 
+                    text += '-'.repeat(screen);               
+                }
+                document.getElementById('show').innerHTML = text;
+            }
+            interId = setInterval( run, 50);
+        }
+
+        function run() {
+            let num = Math.floor(Math.random() * 8);
+            dist[num] -= 1;
+
+            if(dist[num] <= 0) {
+                dist[num] = 0;
+                document.getElementById('stop').disabled = true;
+                document.getElementById(num).innerHTML = `${horse}${' '.repeat(space - dist[num] + 1)}|`;
+                let div = document.createElement('div');
+                div.innerHTML = `Orz ${num + 1} Wins!`;
+                div.style.fontSize = '25px';
+                document.body.appendChild(div);
+
+                clearInterval(interId);
+                return;
+            }
+
+            document.getElementById(num).innerHTML = `|${' '.repeat(dist[num])}${horse}${' '.repeat(space - dist[num])}|`;
+
+        }
+        function stop() {
+            document.getElementById('start').disabled = false;
+            document.getElementById('stop').disabled = true;
+            clearInterval(interId);
+        }
+
+
+
+    </script>
+</body>
+</html>

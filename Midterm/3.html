@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" style="width:180px;" id="input" onkeyup="len();" placeholder="Please enter your ID number" id="input">
+    <br>
+    <br>
+    <button onclick="verify();" id="verify" disabled>Verify</button>
+    <div id="output"></div>
+    
+</body>
+</html>
+
+<script>
+    function len(){
+        let input = document.getElementById('input').value;
+        let pattern =/[A-Za-z][12][0-9]{8}/;
+        if(input.length == 10 && input.match(pattern)){
+            console.log(input.length);
+            
+            document.getElementById("verify").disabled = false;
+        }else{
+            document.getElementById("verify").disabled = true;
+        }
+    }
+    function verify(){
+        let table = {
+            A:10, B:11, C:12, D:13, E:14, F:15, G:16, H:17,
+            I:34, J:18, K:19, L:20, M:21, N:22, O:35, P:23,
+            Q:24, R:25, S:26, T:27, U:28, V:29, W:32, X:30,
+            Y:31, Z:33 
+        }
+
+        let input = document.getElementById('input').value.toUpperCase();
+        console.log(input);
+        let num = table[input[0]];
+        let ten = Math.floor(num/10);
+        //console.log(ten);
+        
+        let one = num % 10;
+        //console.log(one);
+        num = ten + one * 9;
+        for(let i = 1; i < input.length - 1; i++)
+            num += Number(input[i]) * (9 - i);
+        num += Number(input[9]);
+        
+        console.log(num);
+
+        if(num % 10 == 0){
+            
+            document.getElementById("output").innerHTML="Correct";
+            document.getElementById("output").setAttribute("style","color:black");
+        }else{
+            document.getElementById("output").innerHTML="Incorrect!";
+            document.getElementById("output").setAttribute("style","color:red");
+        }
+        
+    }
+
+
+</script>

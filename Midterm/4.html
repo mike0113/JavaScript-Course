@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Student Number : <input type="text" id="idNum"/>
+    <button type="button" onclick="Login();">Login</button>
+    <br>
+    Topic : <div id="topic" ></div>
+    <br>
+    Math :
+    <div id="math"></div>
+    <br>
+    Answer : <input id="ans"></input><button onclick="submit();" id="submit">Submit Answer</button>
+    <br>
+    <br>
+    Result : <div id="result" ></div>
+
+
+    <script>
+        const socket = new WebSocket("ws://lilina.csie.ncnu.edu.tw:10254");
+
+        
+        function Login() {
+                    //Listen for messages
+            socket.onmessage = (event) => {
+                console.log("Message from server ", event.data);
+                //document.getElementById("result").innerHTML = event.data;
+                let rec = JSON.parse(event.data);
+                let math = rec["matrix"];
+                let matrix = `${math[0][0]} ${math[0][1]}<br>${math[1][0]} ${math[1][1]}`;
+                let mes = rec["message"];
+                document.getElementById("topic").innerHTML = mes;
+                document.getElementById("math").innerHTML = matrix;
+                let ans = math[0][0]*math[1][1] - math[0][1]*math[1][0];
+                document.getElementById("ans").value = ans;
+            };
+
+
+            let id = document.getElementById("idNum").value;
+            let obj = {studentNumber: id};
+            let json = JSON.stringify(obj);
+            socket.send(json);
+        }
+
+        function submit(){
+            socket.onmessage = (event) => {
+                console.log("Message from server ", event.data);
+                //document.getElementById("result").innerHTML = event.data;
+                let rec = JSON.parse(event.data);
+                console.log(rec);
+                document.getElementById("result").innerHTML = rec["message"];
+                
+            };
+
+            let id = document.getElementById("idNum").value;
+            let ans = Number(document.getElementById("ans").value);
+            let obj = {
+                studentNumber: id,
+                answer: ans
+            };
+            socket.send(JSON.stringify(obj));
+        }
+        
+        
+
+    </script>
+    
+</body>
+</html>

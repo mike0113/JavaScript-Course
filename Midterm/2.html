@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Select a time to count down:</h2>
+    <input type="datetime-local" id="input">
+    <br>
+    <br>
+    <button id="start" onclick="start();">Start</button>
+    <hr>
+    <div id="output">
+
+    
+</body>
+</html>
+
+<script>
+    let input = document.getElementById("input");
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = String(now.getMonth() + 1).padStart(2, '0');
+    let day = String(now.getDate()).padStart(2, '0');
+    let hours = String(now.getHours()).padStart(2, '0');
+    let minutes = String(now.getMinutes()).padStart(2, '0');
+    console.log(`${year}-${month}-${day}T${hours}:${minutes}`);
+    
+    input.setAttribute("min", `${year}-${month}-${day}T${hours}:${minutes}`);
+    //console.log(now.toString());
+
+
+    function start() {
+        let pushTime = new Date().getTime();
+        let textTime = document.getElementById("input").value;
+        console.log(Date.parse(textTime));
+        let inputTime = Date.parse(textTime);
+
+        if(inputTime <= pushTime ){
+            alert("Please choose future time!");
+        }else{
+            //console.log(inputTime, " <= ");
+            //console.log(pushTime);
+            document.getElementById('start').disabled = true;
+            //console.log("good");
+            let millonsecond = inputTime-pushTime;
+            console.log(millonsecond);
+            
+            let nIntervId = setInterval( () => 
+            {
+                millonsecond = millonsecond - 1000;
+                let time = millonsecond;
+                let day = Math.floor(millonsecond / (1000 * 60 * 60 *24));
+                time -= day * (1000 * 60 * 60 *24);
+                let hour = Math.floor(millonsecond / (1000 * 60 * 60)) % 24;
+                time -= hour * (1000 * 60 * 60);
+                let minute = Math.floor(millonsecond / (1000 * 60)) % 60;
+                time -= minute * (1000 * 60);
+                let second = Math.floor(millonsecond / 1000) % 60;
+
+                if(millonsecond <= 0) {
+                    millonsecond = 0;
+                    clearInterval(nIntervId);
+                    setTimeout(() => {alert(`Time's up!`);}, 100);
+                    return;
+                }
+
+                document.getElementById('output').innerHTML =  `🕘${day} Day ${hour} Hour ${minute} Minute ${second} Second`;
+
+            }, 1000)
+
+            
+        }
+        
+
+
+    }
+    
+
+
+
+
+
+</script>
