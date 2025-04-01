@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const start = React.createElement("button", {onClick : Start, id : `start`}, `Start`);
+        const stop = React.createElement("button", {onClick: Stop, id : `stop`}, `Stop`);
+        const button = React.createElement("div", null, [start, stop]);
+        
+        const container = document.getElementById("root");
+        const root = ReactDOM.createRoot(container);
+        root.render(button);
+
+        let horse = `~/-\\^`;
+        let dist = Array.from('0'.repeat(8)).map(x => Number(x));
+        console.log(dist);
+        let interId;
+        let initial = true;
+
+        function Start(){
+            console.log('start');
+            document.getElementById("start").setAttribute("disabled", true);
+            document.getElementById("stop").removeAttribute("disabled");
+            
+            if (initial) {
+                initial = false;
+                const pre = React.createElement("pre", null, dist.map( (e, i) =>
+                {
+                    const line = React.createElement("div", null, '-'.repeat(72));
+                    const track = React.createElement("div", {id: i}, `|${horse}${' '.repeat(65)}|`);  
+                    if (i == 7)
+                        return [line, track, line];
+
+                    return [line, track];
+                }));
+            
+                root.render([button, pre]);
+            }
+            interId = setInterval( run, 50);    
+        }
+
+        function run() {
+            let num = Math.floor(Math.random() * 8);
+            dist[num] += 1;
+
+            if(dist[num] > 65) {
+                dist[num] = 66;
+                document.getElementById('stop').disabled = true;
+                const pre = React.createElement("pre", null, dist.map( (e, i) =>
+                {
+                    const line = React.createElement("div", null, '-'.repeat(72));
+                    let track;
+                    if (e == 66)
+                        track = React.createElement("div", {id: i}, `|${' '.repeat(e)}${horse}`);
+                    else 
+                        track = React.createElement("div", {id: i}, `|${' '.repeat(e)}${horse}${' '.repeat(65 - e)}|`);
+
+                    if (i == 7)
+                        return [line, track, line];
+
+                    return [line, track];
+                }));
+
+                const h2 = React.createElement("h2", null, `Horse ${num + 1} wins !!!`); 
+                root.render([button, pre, h2]);
+                clearInterval(interId);
+                return;
+            }
+
+            //not finish
+            const pre = React.createElement("pre", null, dist.map( (e, i) =>
+            {
+                const line = React.createElement("div", null, '-'.repeat(72));
+                const track = React.createElement("div", {id: i}, `|${' '.repeat(e)}${horse}${' '.repeat(65 - e)}|`);
+                if (i == 7)
+                    return [line, track, line];
+
+                return [line, track];
+            }));
+
+            root.render([button, pre]);
+        }
+
+        function Stop(){
+            console.log(`stop`);
+            document.getElementById("start").removeAttribute("disabled");
+            document.getElementById("stop").setAttribute("disabled", true);
+            clearInterval(interId);
+        }
+    </script>
+</body>
+</html>

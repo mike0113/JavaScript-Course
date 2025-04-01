@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="500px" height="500px" style="border:1px solid #000000"></canvas>
+    <script>
+        function draw() {
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+        
+            ctx.fillStyle = "rgb(0 0 0)";
+            ctx.beginPath();
+            
+            //outer
+            ctx.moveTo(0, 0);
+            ctx.lineTo(190, 0);
+            ctx.lineTo(190, 190);
+            ctx.lineTo(0, 190);
+
+            //inner
+            for(let y = 0; y < 9; y++) {
+                for(let x = 0; x < 9; x++) {
+                    ctx.moveTo((x*20) + 10, (y*20) + 10);
+                    ctx.lineTo((x*20) + 10, (y*20) + 20);
+                    ctx.lineTo((x*20) + 20, (y*20) + 20);
+                    ctx.lineTo((x*20) + 20, (y*20) + 10);
+                }
+            }
+
+
+            ctx.fill();
+        }
+
+        draw();
+
+    </script>
+    
+</body>
+</html>

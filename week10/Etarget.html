@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function yellowBg(e) {
+            e.target.style.backgroundColor = 'yellow';
+        }
+        function whiteBg(e) {
+            e.target.style.backgroundColor = 'white';
+        }
+
+        function Text({s}) {
+            const p ={onMouseEnter: yellowBg, onMouseLeave: whiteBg};
+            return (<h1 {...p}> {s} </h1>);
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render([<Text s="alice"/>, <Text s="bob"/>, <Text s="carol"/>]);
+            
+    </script>
+    
+</body>
+</html>

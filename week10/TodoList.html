@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        let todoList = ["Write down what you want to do", "Learn React", "Build a project", "Eat dinner"];  //initial todoList
+        let delList=[0,0,0,0];
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+
+
+        const update = () => {      // re-render
+            renderApp();
+        };
+
+        function TodoList({ todos, delList, onDelete, changeColor, recoverColor, alerts, toEnd}) {
+
+            return (
+                <ul>
+                {todos.map((todo, i) => (
+                    <li key={i} style={{ marginBottom: "10px" }} >
+                    <span onMouseEnter={changeColor} onMouseLeave={recoverColor} onClick={e =>{alerts(e, delList, todos, i, toEnd)}} style={{textDecoration: delList[i]? "line-through" : "none", cursor: "pointer"}} >
+                        {todo}
+                    </span>
+                    <button
+                        onClick={() => onDelete(i)}
+                        style={{ marginLeft: "10px", color: "red", borderRadius: "5px",  cursor: "pointer", transition: "box-shadow 1s ease, transform 0.3s ease", border: "none"}}
+                    >
+                        X
+                    </button>
+                    </li>
+                ))}
+                </ul>
+            );
+        }
+
+        function AddTodo({ onAdd }) {
+            let input;
+
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                if (input.value.trim()) {
+                onAdd(input.value.trim());
+                input.value = "";
+                }
+            };
+
+            return (
+                <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    ref={(el) => (input = el)}
+                    placeholder="Add a new task"
+                    style={{ marginRight: "10px" }}
+                />
+                <button type="submit" style={{ color: "blue", borderRadius: "5px",  cursor: "pointer"} }>Add</button>
+                </form>
+            );
+        }
+
+        // parent component
+        function TodoApp() {
+            const handleAdd = (newTodo) => {
+                todoList.push(newTodo);
+                delList.push(0);
+                update();
+            };
+
+            const handleDelete = (index) => {
+                todoList.splice(index, 1);  //splice(index[, delete#, [addElements...]])
+                delList.splice(index, 1);
+                update();
+            };
+
+            const lighter = (e) => {
+                e.target.style.backgroundColor = "white";
+            }
+
+            const darker = (e) => {
+                console.log(e.target.innerHTML);
+                
+                e.target.style.backgroundColor = "grey";
+            }
+
+            const alerts = (e, delList, todos, i, toEnd) => {
+                //let text = e.target.innerHTML;
+
+                if(delList[i] == 0){
+                    delList[i] = 1;
+                    alert(`Congratulations : You finish ${e.target.innerHTML}.`);
+                    toEnd(todos, delList, i);
+
+                }else{
+                    delList[i] = 0;
+                }
+
+                update();
+            }
+            const toEnds = (todoList, delList, i) => {
+                let ele = todoList.splice(i,1);
+                let num = delList.splice(i,1);
+                todoList.push(ele);
+                delList.push(num);
+
+            }
+
+            return (
+                <div style={{ padding: "20px" }}>
+                <h1>Todo List</h1>
+                <AddTodo onAdd={handleAdd} />
+                <TodoList todos={todoList} delList={delList} onDelete={handleDelete} changeColor={darker} recoverColor={lighter} alerts={alerts} toEnd={toEnds} />
+                </div>
+            );
+        }
+
+        // render
+        function renderApp() {
+            root.render(<TodoApp />);
+        }
+
+        // initial render
+        renderApp();
+
+    </script>
+    
+</body>
+</html>

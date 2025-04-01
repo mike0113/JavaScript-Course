@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+
+<script>
+    const div = document.getElementById("root");
+
+
+    const num = Array.from('123456789').map(e => Number(e));
+    console.log(num);
+
+
+    const ele = num.map(e => React.createElement('tr', null,  num.map( z =>
+    {
+        if ((e + z) % 2 == 0)
+            return React.createElement('td', null, `${e} * ${z} = ${e*z}`);
+        else
+            return React.createElement('td', {style : {backgroundColor: "yellow"}}, `${e} * ${z} = ${e*z}`);
+    })));
+    
+
+    const tbody = React.createElement('tbody', null, ele);
+    const table = React.createElement('table', {border : 1}, tbody);
+    const root = ReactDOM.createRoot(div);
+    root.render(table);
+
+
+</script>

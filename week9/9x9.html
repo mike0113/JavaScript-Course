@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function Table() {
+            return (
+                <table className="tables">
+                    <tbody>
+                        {Array.from(' '.repeat(9)).map( (_, j) =>
+                        {   
+                        return (    
+                            <tr key={j+1} >
+                            {
+                                Array.from(' '.repeat(9)).map( (_, i) => 
+                                {
+                                    return (
+                                        // ((i+j) %2 == 0)? 
+                                        //     <td key={i+1} className="changeColor">{(j+1) + " * " + (i+1) + " = " + (i+1) * (j+1) }</td> : 
+                                        //     <td key={i+1}>{(j+1) + " * " + (i+1) + " = " + (i+1) * (j+1) }</td>
+                                        <td key={i+1} className={((i+j) % 2 == 0)? "changeColor":""}> {(j+1) + " * " + (i+1) + " = " + (i+1) * (j+1) }</td>
+                                        
+                                    )
+                                })
+                            }
+                            </tr>
+                        )})}
+                    </tbody>
+                </table>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<Table />);
+
+    </script>
+    
+</body>
+</html>
+
+<style>
+    .tables, .tables tr, .tables td {
+        border: solid;
+    }
+    .tables {
+        border-collapse: collapse;
+    }
+    .changeColor {
+        background-color: yellow;
+    }
+</style>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <table id="table"></table>
+</body>
+</html>
+
+<script>
+    const table = document.getElementById("table");
+    table.setAttribute("border", 1);
+    const trElement = [];
+    for(let i = 0; i < 9; i++){ //for tr
+        let tdElement = [];
+        for(let j = 0; j < 9; j++){ //for td
+            tdElement.push(React.createElement('td', null, `${i+1}*${j+1}=${(i+1) * (j+1)}`));
+        }
+        const tr = React.createElement('tr', null, ...tdElement);
+        trElement.push(tr); 
+    }
+
+    const tbody = React.createElement('tbody', null, trElement);
+    const root = ReactDOM.createRoot(table);
+    root.render(tbody);
+
+
+</script>

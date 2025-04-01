@@ -1,0 +1,24 @@
+<table>
+    <tr><td>Name <td><input id=name />
+    <tr><td>Height <td><input id=height />
+    <tr><td><button id='btnSend' onClick='sendMessage()' disabled>Send</button>
+    <td><span id=rank></span>
+</table>
+    <script>
+        // Create WebSocket connection.
+        const socket = new WebSocket("ws://lilina.csie.ncnu.edu.tw:11129");
+        // Connection opened
+        socket.onopen = () => {
+            document.getElementById('btnSend').removeAttribute('disabled')
+        };
+        // Listen for messages
+        socket.onmessage = (event) => {
+            obj = JSON.parse(event.data);
+            let rank = document.getElementById('rank');
+            rank.innerHTML = `<FONT COLOR="green">Rank: ${obj.rank}</FONT>`;};
+        function sendMessage() {
+            const name = document.getElementById('name').value.toLowerCase();const height = Number(document.getElementById('height').value);
+            const s = JSON.stringify({name: name, height: height});
+            socket.send(s);
+        }
+    </script>

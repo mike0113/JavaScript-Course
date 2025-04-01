@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const json = `[{"name": "Bob", "height": 162, "weight": 52, "user": "bob", "passwd": "0000"},
+            {"name": "Minkowski", "height": 175, "weight": 56, "user": "min", "passwd": "1234"},
+            {"name": "Harrison", "height": 178, "weight": 65, "user": "jack", "passwd": "aaaa"}
+        ]`;
+        const userData = JSON.parse(json)
+
+        const div = React.createElement("div", null, 
+            React.createElement("span", {style: {width: '100px', display: 'inline-block'}}, 'User:'),
+            React.createElement("input", {id: 'user', type: 'text'}, null),
+            React.createElement("br", null, null),
+            React.createElement("span", {style: {width: '100px', display: 'inline-block'}}, 'Password:'),
+            React.createElement("input", {id: 'password',type: 'password'}, null),
+            React.createElement("br", null, null),
+            React.createElement("button", {type: 'text', onClick: ()=> login(), style: {marginLeft: '100px', marginTop: '10px'}}, 'Login')
+        )
+
+        function login() {
+            console.log('hi');
+            let user = document.getElementById('user').value;
+            let passwd = document.getElementById('password').value;
+            let who;
+            if(who = userData.find(e => e.user == user && e.passwd == passwd)){
+                console.log('correct');
+                const table = React.createElement("table", {style: {borderSpacing: '5px'}},
+                    React.createElement("thead", null,
+                        Object.keys(who).map( (e,i) =>
+                        {
+                            //console.log(typeof e);
+                            if(e === 'passwd')
+                                return;
+                            return React.createElement("tr", {key: i}, 
+                                React.createElement("td", null, e),
+                                React.createElement("td", null, who[e]))
+                        }
+                )));
+
+                root.render(table);
+                
+            }else{
+                alert("Error UserName or Password");
+            }
+        }
+ 
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(div);
+    
+    </script>
+    
+</body>
+</html>

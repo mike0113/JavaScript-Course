@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="500px" height="500px" style="border:1px solid #000000"></canvas>
+
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const img = new image();
+        img.src = 'https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-1/335207500_235223732210370_8788020135644639266_n.jpg?stp=dst-jpg_s200x200&_nc_cat=101&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=xq6bSU4BsbEQ7kNvgExvZ8c&_nc_zt=24&_nc_ht=scontent-tpe1-1.xx&_nc_gid=Ab28X3M-6MFwb7hrRD0pJa1&oh=00_AYCqk0VJBbFxVp_i8dp9fai-x0fkClVjUAXraOTVVgxGkA&oe=674F3883'
+
+        img.addEventListener("load", () => {
+            ctx.drawImage(img, 0, 0);
+        })
+    </script>
+    
+</body>
+</html>

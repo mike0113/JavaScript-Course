@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const picArr = [30, 38, 53, 24, 46, 3062, 56, 33,
+                        47, 51, 50, 2315, 59, 3526, 29101, 39];
+        const names = ["阮夙姿", "洪政欣", "楊峻權", "石勝文", "陳恒佑", "周耀新", "劉震昌", "林宣華",
+                       "陳履恒", "黃育銘", "黃光璿", "吳坤熹", "鄭文凱", "陳依蓉", "周信宏", "張克寧"];
+        const URL1 = `https://www.csie.ncnu.edu.tw/img/`;
+        const URL2 = `.jpg`;
+
+        //console.log(names);
+
+        const Teacher = ({names}) => {
+            const [prof, setProf] = React.useState(0);
+            //console.log(name[prof]);
+            
+            return (
+                <span  style={{width: "250px", display: "flex", alignItems: "center", flexDirection: "column", gap: "10px"}}> 
+                    <div>
+                        <button onClick={() => {
+                            if((prof - 1) < 0)
+                                setProf(names.length - 1);
+                            else
+                                setProf(prof - 1);
+                        }}>{`<`}</button>
+                        <button onClick={() => {
+                            if((prof + 1) > (names.length - 1))
+                                setProf(0);
+                            else
+                                setProf(prof + 1)
+                        }}>{`>`}</button>
+                    </div>                    
+                    <img src={URL1 + picArr[prof] + URL2} style={{width: "200px"}}/>
+                    <b style={{fontSize: "20px"}}>{names[prof]}</b>
+                    
+                </span>
+            )
+        }
+
+        // console.log(name);
+        
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<Teacher names={names}/>)
+
+    </script>
+    
+</body>
+</html>

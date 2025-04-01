@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+    const h1 = React.createElement('h1', null, 'Hello, React');
+
+    const img = React.createElement('img', {'src': 'https://www.juniper.net/content/dam/www/assets/images/us/en/customers/case-studies/logos/2023/national-chi-nan-university-logo.png'});
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render([h1, img]);
+
+    
+    </script>
+
+</body>
+</html>

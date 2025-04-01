@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <div><span>Username</span><input id="name" type="text"></div>
+        <div><span>Password</span><input id="passwd" type="text"></div>
+        <br><button onclick="login()" type="button">Login</button>  
+    </div>
+    <div id="result"></div>
+
+
+
+    <script>
+        let cookstr = document.cookie;
+        //console.log("cookies", cookstr);
+        
+        if(cookstr != "") {
+            let cookie = parseCookies(cookstr);
+            console.log("object", cookie);
+            
+            document.getElementById("container").innerHTML = '';
+            document.getElementById("result").innerHTML = `${cookie["Username"]} Login Successfully!`;
+            
+        }else{
+            document.getElementById("result").innerHTML = '';
+        }
+
+        function parseCookies(cookstr) {
+            let cookies ={};
+            cookstr.split(';').map(pair =>{
+                const [key, value] = pair.split('=').map(x => x.trim());
+                cookies[key] = decodeURIComponent(value);
+                console.log(key, value);
+                
+            })
+
+            return cookies;
+        }
+
+
+
+        function login() {
+    
+            let time = new Date();
+            time.setTime(time.getTime() + (120*1000));
+
+            let name = document.getElementById("name").value;
+            let passwd = document.getElementById("passwd").value;
+            document.cookie=`Username=${name};expires=${time.toUTCString()}`;
+            document.cookie=`Password=${passwd};expires=${time.toUTCString()}`;
+            document.getElementById("result").innerHTML = `${name} Login Successfully!`;
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <input type='radio' name='name' onChange='showStudent(0)'><label>Alice</label>
+    <input type='radio' name='name' onChange='showStudent(1)'><label>Bob</label>
+    <input type='radio' name='name' onChange='showStudent(2)'><label>Carol</label>
+    <div id='root'></div>
+    
+</body>
+</html>
+
+<script>
+    const students = [ {name: 'Alice', height: 161, weight: 51},
+                    {name: 'Bob', height: 162, weight: 52},
+                    {name: 'Carol', height: 163, weight: 53},
+                    ]
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    
+    function showStudent(i) {
+      const s = React.createElement('table', null,
+        React.createElement('tbody', null,
+          Object.keys(students[i]).map( x =>
+            React.createElement('tr', null,
+              [React.createElement('td', null, x),
+               React.createElement('td', null, students[i][x])]
+            )
+          )
+        )
+      );
+      root.render(s);
+    }
+
+</script>    

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="729px" height="500px" style="border:1px solid #000000"></canvas>
+    <script>
+        
+
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function wheel(x) {
+        const r = 50;
+        let radian = x/100;
+        ctx.clearRect(0, 0, 1000, 150);
+        ctx.beginPath();
+        ctx.moveTo(50+x, 50);
+        ctx.lineTo(50+x+r*Math.cos(radian), 50+r*Math.sin(radian));
+        ctx.moveTo(50+x+r, 50);
+        ctx.arc(50+x, 50, 50, 0, Math.PI*2, true);
+        ctx.stroke();
+        }
+
+        for (let x=0; x<Math.PI*100*2; ++x) {
+        setTimeout( ()=> wheel(x), x*20 );
+        }
+
+    </script>
+    
+</body>
+</html>

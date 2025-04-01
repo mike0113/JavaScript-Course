@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+
+  <script type="text/babel">
+    function getImageUrl(s) {
+        return `https://i.imgur.com/${s}.jpg`;
+        }
+
+        function Gallery(props) {
+        return (
+            <section className="profile">
+                <h2>{props.name}</h2>
+                <img
+                className="avatar"
+                src={getImageUrl(props.pic)}
+                alt={props.name}
+                width={70}
+                height={70}
+                />
+                <ul>
+                <li>
+                    <b>Profession: </b>
+                    {props.profession}
+                </li>
+                <li>
+                    <b>Awards: {props.awards.length}</b>
+                    ({props.awards.join(",")})
+                </li>
+                <li>
+                    <b>Discovered: </b>
+                    {props.discovered}
+                </li>
+                </ul>
+            </section>
+        );
+    }
+
+
+    function Profile() {
+        return (
+            <>
+                <h1>Notable Scientists</h1>
+                <Gallery 
+                    pic="szV5sdG" 
+                    name="Maria Skłodowska-Curie" 
+                    profession="physicist and chemist" 
+                    awards={["Nobel Prize in Physics", "Nobel Prize in Chemistry", "Davy Medal", "Matteucci Medal"]} 
+                    discovered="polonium (chemical element)"/>
+                <Gallery 
+                    pic="YfeOqp2" 
+                    name="Katsuko Saruhashi" 
+                    profession= "geochemist" 
+                    awards={["Miyake Prize for geochemistry", "Tanaka Prize"]} 
+                    discovered="a method for measuring carbon dioxide in seawater"/>
+            </>
+        );
+    }
+        
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Profile />);
+    
+    </script>
+    
+</body>
+</html>
